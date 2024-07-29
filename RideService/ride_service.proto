@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package ride;
+
+service RideService {
+  rpc CreateRide(RideRequest) returns (RideResponse) {}
+  rpc GetRide(RideId) returns (RideResponse) {}
+  rpc UpdateRide(RideUpdateRequest) returns (RideResponse) {}
+}
+
+message RideRequest {
+  string pickup_location = 1;
+  string dropoff_location = 2;
+  int32 passenger_count = 3;
+}
+
+message RideResponse {
+  string ride_id = 1;
+  string driver_id = 2;
+  string vehicle_id = 3;
+  RideStatus status = 4;
+}
+
+enum RideStatus {
+  PENDING = 0;
+  IN_PROGRESS = 1;
+  COMPLETED = 2;
+}
+
+message RideId {
+  string ride_id = 1;
+}
+
+message RideUpdateRequest {
+  string ride_id = 1;
+  RideStatus status = 2;
+}

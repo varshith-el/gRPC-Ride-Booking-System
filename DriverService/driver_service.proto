@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package driver;
+
+service DriverService {
+  rpc RegisterDriver(DriverRegistrationRequest) returns (DriverRegistrationResponse) {}
+  rpc UpdateDriverAvailability(DriverAvailabilityRequest) returns (DriverAvailabilityResponse) {}
+  rpc GetDriver(DriverId) returns (DriverResponse) {}
+}
+
+message DriverRegistrationRequest {
+  string name = 1;
+  string email = 2;
+  string phone_number = 3;
+  string vehicle_type = 4;
+  string vehicle_registration_number = 5;
+}
+
+message DriverRegistrationResponse {
+  string driver_id = 1;
+}
+
+message DriverAvailabilityRequest {
+  string driver_id = 1;
+  bool available = 2;
+}
+
+message DriverAvailabilityResponse {
+  string driver_id = 1;
+  bool available = 2;
+}
+
+message DriverId {
+  string driver_id = 1;
+}
+
+message DriverResponse {
+  string driver_id = 1;
+  string name = 2;
+  string email = 3;
+  string phone_number = 4;
+  string vehicle_type = 5;
+  string vehicle_registration_number = 6;
+}
