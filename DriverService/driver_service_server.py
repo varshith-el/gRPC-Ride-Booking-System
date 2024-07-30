@@ -3,22 +3,22 @@ from concurrent import futures
 
 import grpc
 
-from protos import driver_service_pb2
-from protos import driver_service_pb2_grpc
+import driver_service_pb2
+import driver_service_pb2_grpc
 
 class DriverService(driver_service_pb2_grpc.DriverServiceServicer):
     def RegisterDriver(self, request, context):
         # Register a new driver
         driver_id = "123"
         logging.info("Driver registered: %s", driver_id)
-        return driver_service_pb2.RegisterDriverResponse(driver_id=driver_id)
+        return driver_service_pb2.DriverRegistrationResponse(driver_id=driver_id)
 
     def UpdateDriverAvailability(self, request, context):
         # Update a driver's availability
         driver_id = request.driver_id
-        availability = request.availability
+        availability = request.available
         logging.info("Driver availability updated: %s %s", driver_id, availability)
-        return driver_service_pb2.UpdateDriverAvailabilityResponse()
+        return driver_service_pb2.DriverAvailabilityResponse(driver_id=driver_id, available=availability)
 
     def GetDriver(self, request, context):
         # Get a driver by ID
@@ -35,10 +35,7 @@ class DriverService(driver_service_pb2_grpc.DriverServiceServicer):
         return driver
 
     def AssignDriver(self, request, context):
-        # Assign a driver to a ride
-        ride_id = request.ride_id
-        logging.info("Driver assigned to ride: %s", ride_id)
-        return driver_service_pb2.AssignDriverResponse(driver_id="123")
+        pass
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
